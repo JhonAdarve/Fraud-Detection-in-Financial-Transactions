@@ -40,7 +40,7 @@ scatter = px.scatter(df, x='amount', y='fraud', color='category',
 
 # Gráfico 3: Series Temporales de Transacciones Fraudulentas
 df['hour'] = df['step'] % 24  # Convertir el paso a horas para fines ilustrativos
-time_series = px.line(df.groupby('hour')['fraud'].sum().reset_index(), x='hour', y='fraud',
+time_series = px.line(df.groupby('hour')['fraud'].sum().reset_index(), x='hour',  y='fraud',
                       title="Tendencia de Fraude por Hora del Día", 
                       labels={'hour': 'Hora del Día', 'fraud': 'Número de Fraudes'})
 
