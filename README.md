@@ -14,22 +14,21 @@ Sistema de detección de fraude basado en machine learning para identificar tran
 ```
 fraud-detection/
 │
-├── data/                   # Datos del proyecto
-│   ├── raw/               # Datos sin procesar
-│   └── processed/         # Datos procesados
+├── data/                 # Datos del proyecto
+│   ├── raw/              # Datos sin procesar
+│   └── processed/        # Datos procesados
 │
-├── notebooks/             # Jupyter notebooks
-│   ├── 01_EDA.ipynb      # Análisis exploratorio
-│   ├── 02_preprocessing.ipynb
-│   └── 03_modeling.ipynb
+├── notebooks/            # Jupyter notebooks
+│   ├── EDA.ipynb         # Análisis exploratorio
+│   └── Modeling.ipynb    # Implementacón y selección de modelos
 │
-├── src/                   # Código fuente
+├── src/                  # Código fuente
 │   ├── data/             # Scripts de procesamiento
 │   ├── features/         # Feature engineering
 │   ├── models/           # Modelos
 │   └── visualization/    # Código del dashboard
-│
-├── dashboard/            # Archivos del dashboard
+|
+├── dashboard/            # Código del dashboard
 │
 ├── requirements.txt      # Dependencias
 └── README.md
@@ -94,9 +93,9 @@ python src/dashboard/app.py
 - Navegador web moderno
 
 ## 👥 Equipo
-- [Nombre] - Data Scientist
-- [Nombre] - ML Engineer
-- [Nombre] - Data Analyst
+- [Giovvany Cardona] - Data Scientist
+- [Julian Gomez] - ML Engineer
+- [Jhon Adarve] - Data Analyst
 
 ## 📑 Licencia
 Este proyecto está bajo la licencia [INCLUIR LICENCIA]
@@ -105,15 +104,22 @@ Este proyecto está bajo la licencia [INCLUIR LICENCIA]
 Las contribuciones son bienvenidas. Por favor, abra un issue primero para discutir los cambios que le gustaría realizar.
 
 ## 📧 Contacto
-Para preguntas y soporte, contactar a: [EMAIL]
+Para preguntas y soporte, contactar a: 
+- j.adarve@uniandes.edu.co
+- j.gomez24@uniandes.edu.co 
+- g.cardonar@uniandes.edu.co 
 
 ## 🔄 Estado del Proyecto
 En desarrollo activo - Versión 1.0.0
 
 ## 📚 Referencias
-- [Paper BankSim]
-- [Documentación relevante]
-- [Otros recursos]
+- Banksim: A bank payments simulator for fraud detection research Inproceedings
+  26th European Modeling and Simulation Symposium, EMSS 2014, Bordeaux, France, pp. 144–152, Dime University of Genoa, 2014, ISBN: 9788897999324.
+  https://www.researchgate.net/publication/265736405_BankSim_A_Bank_Payment_Simulation_for_Fraud_Detection_Research
+
+- Synthetic data from a financial payment system
+  https://www.kaggle.com/datasets/ealaxi/banksim1/data
+
 
 ---
 ⚠️ **Nota**: Este proyecto es para fines de investigación y desarrollo. Los datos utilizados son simulados y no contienen información personal real.
