@@ -281,19 +281,7 @@ app.layout = html.Div([
                 )
             ], className='graph-container')
         ], className='segmentation')
-    ], className='visualizations-container'),
-
-    # Alert Configuration Section
-    html.Div([
-        html.H3("Alert Configuration"),
-        html.Div([
-            html.Label("Transaction Amount Threshold"),
-            dcc.Input(id='amount-threshold', type='number', value=1000),
-            html.Label("Risk Score Threshold"),
-            dcc.Input(id='risk-threshold', type='number', value=0.8),
-            html.Button('Update Thresholds', id='update-thresholds-button')
-        ], className='alert-config')
-    ], className='alerts-section')
+    ], className='visualizations-container')
 ], className='dashboard-container')
 
 # Callback for filtering data
@@ -483,46 +471,6 @@ app.index_string = '''
                 margin-bottom: 20px;
             }
 
-            .alert-section {
-                background: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-
-            .alert-controls {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 20px;
-                margin-top: 15px;
-            }
-
-            .threshold-control {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .threshold-input {
-                padding: 8px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-            }
-
-            .update-button {
-                background-color: var(--primary-color);
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.2s;
-            }
-
-            .update-button:hover {
-                background-color: #1557b0;
-            }
-
             /* Responsive adjustments */
             @media (max-width: 1200px) {
                 .visualization-grid {
@@ -570,23 +518,18 @@ Key Components:
    - Date Range
    - Transaction Categories
    - Amount Range
-   - Risk Threshold
+
 
 3. Visualizations:
    - Geographic Heat Map
    - Risk Analysis Scatter Plot
    - Trend Analysis
-   - Risk Factor Analysis
 
-4. Alert Configuration:
-   - Risk Score Threshold
-   - Amount Threshold
 
 Usage:
 1. Start the application by running this script
 2. Access the dashboard through your web browser at http://localhost:8050
 3. Use the filters to analyze specific data segments
-4. Configure alert thresholds as needed
 
 Dependencies:
 - dash
