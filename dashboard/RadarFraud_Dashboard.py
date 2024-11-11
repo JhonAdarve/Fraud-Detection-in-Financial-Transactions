@@ -13,6 +13,7 @@ from geopy.exc import GeocoderTimedOut
 import folium
 from folium.plugins import HeatMap
 import json
+import random
 
 # Initialize Dash app with external stylesheets
 app = dash.Dash(__name__)
@@ -24,6 +25,23 @@ df['amount'] = df['amount'].astype(float)
 df['step'] = df['step'].astype(int)
 df['hour'] = df['step'] % 24
 df['date'] = pd.to_datetime('2024-01-01') + pd.to_timedelta(df['step'], 'D')
+
+# List of random European postal codes (sample)
+european_postal_codes = [
+    '10115', '75008', '00185', '28013', '69002', '1000', '20095', '11000', '5020', '8001'
+]
+
+# Function to replace postal codes randomly
+def replace_postal_codes(df, column_name, postal_code_list):
+    df[column_name] = df[column_name].apply(lambda x: random.choice(postal_code_list))
+    return df
+
+# Replace postal codes in `zipcodeOri` and `zipMerchant` columns
+df['zipcodeOri'] = df['zipcodeOri'].str.strip("'")  # Remove quotes around the data
+df['zipMerchant'] = df['zipMerchant'].str.strip("'")
+
+df = replace_postal_codes(df, 'zipcodeOri', european_postal_codes)
+df = replace_postal_codes(df, 'zipMerchant', european_postal_codes)
 
 # Función para geocodificar códigos postales
 def get_location_info(zipcode, country='ES'):  # Por defecto España, ajustar según necesidad
