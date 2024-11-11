@@ -188,7 +188,7 @@ app.layout = html.Div([
     # Header
     html.Div([
         html.H1("Financial Fraud Detection Dashboard"),
-        html.P("Real-time monitoring and analysis of fraudulent transactions")
+        html.P("Monitoring and analysis of fraudulent transactions")
     ], className='header'),
 
     # Filters Section
