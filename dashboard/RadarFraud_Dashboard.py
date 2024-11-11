@@ -225,10 +225,12 @@ def create_amount_distribution(df):
         color_discrete_sequence=px.colors.qualitative.Pastel
     )
 
-# Function to create a correlation matrix heatmap
+# Function to create a correlation matrix heatmap excluding geolocation variables
 def create_correlation_matrix(df):
-    # Select only numeric columns
-    numeric_df = df.select_dtypes(include=['float64', 'int64'])
+    # Select only numeric columns, excluding geolocation variables
+    numeric_df = df.select_dtypes(include=['float64', 'int64']).drop(
+        columns=['origin_lat', 'origin_lon', 'merchant_lat', 'merchant_lon'], errors='ignore'
+    )
     
     # Compute the correlation matrix
     correlation_matrix = numeric_df.corr()
