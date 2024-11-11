@@ -4,6 +4,8 @@ from dash.dependencies import Input, Output, State
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
+import seaborn as sns
+import plotly.figure_factory as ff
 import numpy as np
 from datetime import datetime, timedelta
 from geopy.geocoders import Nominatim
@@ -86,8 +88,6 @@ def calculate_kpis(filtered_df):
         'target_precision': 85,
         'target_f1': 87
     }
-
-
 
 # Create KPI Cards
 def create_kpi_card(title, value, target=None, trend=None, format_type='number'):
@@ -183,6 +183,71 @@ def create_time_series(df):
         labels={'date': 'Date', 'fraud_rate': 'Fraud Rate (%)'}
     )
 
+# Function to create distribution by age
+def create_age_distribution(df):
+    return px.histogram(
+        df,
+        x='age',  # Ensure the 'age' column exists in the DataFrame
+        title="Age Distribution",
+        labels={'age': 'Age'},
+        nbins=20,
+        color_discrete_sequence=px.colors.qualitative.Pastel
+    )
+
+# Function to create distribution by gender
+def create_gender_distribution(df):
+    return px.histogram(
+        df,
+        x='gender',  # Ensure the 'gender' column exists in the DataFrame
+        title="Gender Distribution",
+        labels={'gender': 'Gender'},
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+
+# Function to create distribution by merchant category
+def create_category_distribution(df):
+    return px.histogram(
+        df,
+        x='category',  # Ensure the 'category' column exists in the DataFrame
+        title="Merchant Category Distribution",
+        labels={'category': 'Merchant Category'},
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+
+# Function to create distribution by transaction amount
+def create_amount_distribution(df):
+    return px.histogram(
+        df,
+        x='amount',
+        nbins=50,
+        title="Transaction Amount Distribution",
+        labels={'amount': 'Transaction Amount'},
+        color_discrete_sequence=px.colors.qualitative.Pastel
+    )
+
+# Function to create a correlation matrix heatmap
+def create_correlation_matrix(df):
+    # Select only numeric columns
+    numeric_df = df.select_dtypes(include=['float64', 'int64'])
+    
+    # Compute the correlation matrix
+    correlation_matrix = numeric_df.corr()
+    
+    # Create a heatmap
+    fig = ff.create_annotated_heatmap(
+        z=correlation_matrix.values,
+        x=list(correlation_matrix.columns),
+        y=list(correlation_matrix.index),
+        colorscale='Viridis',
+        showscale=True
+    )
+    fig.update_layout(
+        title="Correlation Matrix for Numeric Variables",
+        xaxis_title="Features",
+        yaxis_title="Features"
+    )
+    return fig
+
 # Dashboard Layout
 app.layout = html.Div([
     # Header
@@ -266,21 +331,41 @@ app.layout = html.Div([
             ], className='graph-container')
         ], className='predictive-variables'),
 
-        # Segmentation Analysis
+
+        # Correlation Matrix Section
         html.Div([
-            html.H3("Customer Segmentation"),
+            html.H3("Correlation Matrix"),
             html.Div([
-                dcc.Graph(
-                    id='segment-distribution',
-                    figure=px.histogram(
-                        df,
-                        x='amount',
-                        color='category',
-                        title="Transaction Distribution by Category"
-                    )
-                )
+                dcc.Graph(id='correlation-matrix', figure=create_correlation_matrix(df))
             ], className='graph-container')
-        ], className='segmentation')
+        ], className='correlation-matrix'),        
+    
+        # Distribution Analysis
+        html.Div([
+        # Age Distribution
+        html.Div([
+            html.H3("Age Distribution"),
+            html.Div([
+                dcc.Graph(id='age-distribution', figure=create_age_distribution(df))
+            ], className='graph-container')
+        ], className='age-analysis'),
+
+        # Gender Distribution
+        html.Div([
+            html.H3("Gender Distribution"),
+            html.Div([
+                dcc.Graph(id='gender-distribution', figure=create_gender_distribution(df))
+                ], className='graph-container')
+            ], className='gender-analysis'),
+            html.Div([
+                dcc.Graph(id='category-distribution', figure=create_category_distribution(df))
+            ], className='graph-container'),
+            html.Div([
+                dcc.Graph(id='amount-distribution', figure=create_amount_distribution(df))
+            ], className='graph-container')
+        ], className='distribution-analysis')
+
+    # Other sections (patterns, KPIs, etc.)
     ], className='visualizations-container')
 ], className='dashboard-container')
 
